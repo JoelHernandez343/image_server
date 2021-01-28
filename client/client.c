@@ -15,7 +15,7 @@
 #include <netdb.h>
 
 #include "defs.h"
-#include "../image.h"
+#include "image.h"
 
 #define LOG "[Client] "
 

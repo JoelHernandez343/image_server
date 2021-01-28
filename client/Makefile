@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall
-PROJECT=main
+PROJECT=client
 LDFLAGS=-lm -lpthread
 DESTDIR=/usr/local/bin
 
