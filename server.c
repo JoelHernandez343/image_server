@@ -96,12 +96,17 @@ void client_handler(int client_socket){
 
     bmp_info_header info;
     unsigned char *image = NULL;
-    take_photo(&info, image);
-    printf("Foto tomada\n");
+    take_photo(&info, &image);
+
+    
+
+    if (image != NULL){
+        printf("Foto tomada\n");
+    }
 
     display_information(&info);
 
-    // process_image(&info, image);
+    process_image(&info, image);
 
     int sent = 0, length = sizeof(bmp_info_header);
 

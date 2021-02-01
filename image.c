@@ -84,10 +84,15 @@ void display_information(bmp_info_header *info_header){
     printf("Important colors: %d\n", info_header->imxtcolors);
 }
 
-void take_photo(bmp_info_header * info, unsigned char *imagen){
-    system ("raspistill -n -t 500 -e bmp -w 640 -h 480 -o foto.bmp");
-    system ("convert foto.bmp -resize 50% foto.bmp");
-    imagen = open_BMP("foto.bmp", info );
+void take_photo(bmp_info_header * info, unsigned char **imagen){
+    int status = system ("raspistill -n -t 500 -e bmp -w 640 -h 480 -o foto.bmp");
+
+    printf("Fin de raspistill: %d\n", status);
+
+    status = system ("convert foto.bmp -resize 50% foto.bmp");
+
+    printf("Fin de convert: %d\n", status);
+    *imagen = open_BMP("foto.bmp", info );
 }
 
 void rgb_to_gray(unsigned char *rgb_image, unsigned char *gray_image, uint32_t width, uint32_t height){

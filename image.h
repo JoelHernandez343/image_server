@@ -31,7 +31,7 @@ void display_information(bmp_info_header *info_header);
 
 void WriteImage(const char *fileName, unsigned char *pixels, uint32_t width, uint32_t height, uint32_t bytesPerPixel);
 
-void take_photo(bmp_info_header * info, unsigned char *imagen);
+void take_photo(bmp_info_header * info, unsigned char **imagen);
 void process_image(bmp_info_header * info, unsigned char *image);
 
 #endif
