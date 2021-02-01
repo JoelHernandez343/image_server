@@ -86,7 +86,7 @@ void display_information(bmp_info_header *info_header){
 
 void take_photo(bmp_info_header * info, unsigned char *imagen){
     system ("raspistill -n -t 500 -e bmp -w 640 -h 480 -o foto.bmp");
-    system ("magick convert foto.bmp -resize 50% foto.bmp");
+    system ("convert foto.bmp -resize 50% foto.bmp");
     imagen = open_BMP("foto.bmp", info );
 }
 

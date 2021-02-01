@@ -27,17 +27,32 @@ void receive_data(int client_socket){
 
 	bmp_info_header info;
 	int received = 0, length = sizeof(bmp_info_header);
-    while (received < length){
-        received += read(client_socket, &info + received, length - received);
-    }
+    read(client_socket, &info, length - received);
+
+    printf("header ready!\n");
+    // display_information(&info);
 
 	received = 0;
 	length = info.width * info.height * 3;
 
-	unsigned char *image = (unsigned char *)malloc(sizeof(char) * info.width * info.height * 3);
-    while (received < length){
-        received += read(client_socket, image + received, length - received);
+	unsigned char *image = (unsigned char *)malloc(sizeof(char) * length);
+
+    while(length > 0){
+        received = read(client_socket, image, length);
+        if (received < 0){
+            perror("Error when the client try to recibe information"),exit(EXIT_FAILURE);
+        }
+
+        if (received > 0){
+            printf("Bytes recibidos: %d\n", received);
+        }
+        length -= received;
+        image += received;
     }
+
+    printf("image ready, saving!\n");
+
+
 
 	save_BMP("pues_ressscibido.bmp", &info, image);
 

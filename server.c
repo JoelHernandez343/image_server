@@ -97,17 +97,22 @@ void client_handler(int client_socket){
     bmp_info_header info;
     unsigned char *image = NULL;
     take_photo(&info, image);
-    process_image(&info, image);
+    printf("Foto tomada\n");
+
+    display_information(&info);
+
+    // process_image(&info, image);
 
     int sent = 0, length = sizeof(bmp_info_header);
-    while (sent < length){
-        sent += write(client_socket, &info + sent, length - sent);
-    }
 
+    printf("Sending header...\n");
+    write(client_socket, &info, length);
+    printf("Sent header...\n");
+
+    printf("Sending image...\n");
     sent = 0, length = info.width * info.height * 3;
-    while (sent < length){
-        sent += write(client_socket, image + sent, length - sent);
-    }
+    sent = write(client_socket, image, length);
+    printf("Bytes enviados: %d", sent);
 
     free(image);
 
