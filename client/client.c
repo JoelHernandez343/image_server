@@ -30,33 +30,27 @@ void receive_data(int client_socket){
     read(client_socket, &info, length - received);
 
     printf("header ready!\n");
-    // display_information(&info);
+    display_information(&info);
 
 	received = 0;
 	length = info.width * info.height * 3;
+    
+    printf("Longitud esperada: %d\n", length);
 
 	unsigned char *image = (unsigned char *)malloc(sizeof(char) * length);
 
-    while(length > 0){
-        received = read(client_socket, image, length);
-        if (received < 0){
-            perror("Error when the client try to recibe information"),exit(EXIT_FAILURE);
-        }
+    unsigned char *original = image;
 
-        if (received > 0){
-            printf("Bytes recibidos: %d\n", received);
-        }
-        length -= received;
-        image += received;
+    while (received < length){
+        received += read(client_socket, image + received, length - received);
     }
 
     printf("image ready, saving!\n");
 
+    printf("Imagen recibida\n");
 
-
-	save_BMP("pues_ressscibido.bmp", &info, image);
-
-	free(image);
+	save_BMP("pues_ressscibido.bmp", &info, original);
+	free(original);
 
     printf(LOG"Data received, closing connection.\n");
 }
